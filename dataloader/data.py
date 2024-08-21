@@ -51,7 +51,7 @@ def get_dataloader(data_args, training_args):
         dataset = dataset.rename_column('label', 'labels')
         data_args.tot_class_num = 10
     elif data_args.dataset_name.startswith('Mnist-'):
-        dataset = load_from_disk('mnist')
+        dataset = load_dataset('mnist')
         dataset = dataset.rename_column('image', 'images')
         dataset = dataset.rename_column('label', 'labels')
         data_args.tot_class_num = 10
