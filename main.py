@@ -12,8 +12,8 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 import torch
 import random
 import numpy as np
-from approaches.train import Trainer
-from approaches.eval import evaluate
+from trainer.train import Trainer
+from trainer.eval import evaluate
 from transformers import HfArgumentParser
 from dataloader.data import get_dataloader
 from networks.diffusion import ddim, lora_ddim
