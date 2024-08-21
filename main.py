@@ -1,13 +1,14 @@
-# import os
-# # Set environment variables for HTTP and HTTPS proxies.
-# # These variables define the proxy server address (http://127.0.0.1:7897)
-# # to route network traffic through a proxy. This is useful when you need to
-# # access the internet via a proxy server, such as for network security or bypassing restrictions.
-# os.environ['HTTP_PROXY'] = 'http://127.0.0.1:7897'
-# os.environ['HTTPS_PROXY'] = 'http://127.0.0.1:7897'
+import os
+# Set environment variables for HTTP and HTTPS proxies.
+# These variables define the proxy server address (http://127.0.0.1:7897)
+# to route network traffic through a proxy. This is useful when you need to
+# access the internet via a proxy server, such as for network security or bypassing restrictions.
+os.environ['HTTP_PROXY'] = 'http://127.0.0.1:7897'
+os.environ['HTTPS_PROXY'] = 'http://127.0.0.1:7897'
 
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=UserWarning, message="`log_with=tensorboard` was passed but no supported trackers are currently installed.")
 
 import torch
 import random
