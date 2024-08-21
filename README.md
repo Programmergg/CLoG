@@ -17,7 +17,7 @@ Code and data for our paper <a href="https://arxiv.org/pdf/2406.04584">CLoG: Ben
     </br>
     </br>
     <a href="https://www.python.org/">
-        <img alt="Build" src="https://img.shields.io/badge/Python-3.8+-1f425f.svg?color=purple">
+        <img alt="Build" src="https://img.shields.io/badge/Python-3.9+-1f425f.svg?color=purple">
     </a>
     <a href="https://huggingface.co/docs/diffusers">
         <img alt="Diffusers" src="https://img.shields.io/badge/Diffusers-0.26-blue">
