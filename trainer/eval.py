@@ -39,6 +39,7 @@ def evaluate(diffusion_model, dataloaders, model_args, data_args, training_args)
 
     # Initialize variables for metrics
     performance_sum = 0
+    curr_task_performance = {}
     for task_id in range(data_args.task_id + 1):
         validator = Validator(data_args, training_args)
         validator.to(accelerator.device)
@@ -57,6 +58,7 @@ def evaluate(diffusion_model, dataloaders, model_args, data_args, training_args)
         # Evaluate and log metrics for the current task
         eval_logs = validator.evaluate(all_samples[:data_args.tot_samples_for_eval], all_labels, dataloaders['all_test_loader'][task_id])
         current_performance = eval_logs['metric_for_validation']
+        curr_task_performance[task_id] = current_performance
         # Save samples grid image
         rows = cols = 16
         make_image_grid(all_samples[:rows * cols], rows=rows, cols=cols).save(f'{training_args.logging_dir}/{task_id}.png')
@@ -80,7 +82,11 @@ def evaluate(diffusion_model, dataloaders, model_args, data_args, training_args)
 
     # Calculate Forgetting Rate (FR) if not the first task
     if data_args.task_id > 0:
-        forgetting = first_task_performance - performance_avg
+        forgetting = 0.0
+        for task_id in range(data_args.task_id):
+            init_task_metrics = extract_metrics(update_task_id_in_path(os.path.join(training_args.logging_dir, 'log.txt'), task_id))[task_id]
+            forgetting += (curr_task_performance[task_id] - init_task_metrics)
+        forgetting /= data_args.task_id
         logging.info(f"Forgetting Rate of Task {data_args.task_id}: {forgetting}")
     else:
         logging.info(f"Forgetting Rate of Task {data_args.task_id}: {0.0}")
