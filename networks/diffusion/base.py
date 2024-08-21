@@ -1,11 +1,7 @@
 import torch
-import torch.nn.functional as F
-import random
-from diffusers.utils import make_image_grid
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 
 class BaseLearner(torch.nn.Module):
-
     def __init__(self):
         super(BaseLearner, self).__init__()
         pass
@@ -29,5 +25,3 @@ class BaseLearner(torch.nn.Module):
 
     def save(self):
         pass
-
-    
