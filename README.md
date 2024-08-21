@@ -13,7 +13,7 @@
 
 ---
 <p align="center">
-Code and data for our paper <a href="https://arxiv.org/pdf/2406.04584">CLoG: Benchmarking Continual Learning of Image Generation Models</a>
+Code and data for paper <a href="https://arxiv.org/pdf/2406.04584">CLoG: Benchmarking Continual Learning of Image Generation Models</a>
     </br>
     </br>
     <a href="https://www.python.org/">
