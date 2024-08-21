@@ -31,6 +31,7 @@ Code and data for our paper <a href="https://arxiv.org/pdf/2406.04584">CLoG: Ben
 
 ## 📰 News
 * **[Jun. 7, 2024]**: We launch the first version of code for *label-conditioned CLoG*. Our codebase is still in development, please stay tuned for the comprehensive version.
+* **[Aug. 22, 2024]**: We have released the first version of the code for label-conditioned CoLG. Our codebase is still under development, so please stay tuned for the full version. Currently, there are four key limitations in this version: (1) The training scripts for various methods and GAN components are missing. (2) The testing process does not follow class-guided generation but instead generates based on tasks, leading to potentially inaccurate metrics. (3) In the C-LoRA method, the sample process improperly accesses the task ID directly, whereas it should use alternative means to obtain a pseudo-task ID. (4) The training process for C-LoRA follows the Few-shot Class Incremental Learning approach, which involves pretraining on the first task and LoRA fine-tuning on subsequent tasks. While this approach works well in few-shot scenarios, it is not ideal for LoRA methods, which should leverage a pretrained model on a large dataset. This method should now be referred to as the Few-shot C-LoRA setting.
 
 
 ## 👋 Overview
