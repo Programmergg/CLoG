@@ -49,12 +49,14 @@ To run CLoG from source, follow these steps:
 3. Run `conda env create -f environment.yml` to created a conda environment named `CLoG`.
 4. Activate the environment with `conda activate CLoG`.
 
+<!--
 ## 💽 Usage
 Coming soon! For the time being, you can check `scripts/cifar-naive.sh` for running NCL on CIFAR-10.
 
 ## 💫 Contributions
 We would love to hear from the CL community, broader machine learning, and generative AI communities, and we welcome any contributions, pull requests, or issues!
 To do so, please either file a new pull request or issue. We'll be sure to follow up shortly!
+-->
 
 ## ✍️ Citation
 If you find our work helpful, please use the following citations.
