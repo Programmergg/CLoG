@@ -173,8 +173,8 @@ class Learner(BaseLearner):
 
     @torch.no_grad()
     def sample(self, bs, seed, labels):
-        if self.model_args.method == 'ensemble':
-            task_id = (labels[0] // self.data_args.class_num).item()
+        task_id = (labels[0] // self.data_args.class_num).item()
+        if self.model_args.method == 'ensemble' and task_id > 0:
             self.unet.load_state_dict(torch.load(f'{self.training_args.all_dirs[task_id]}/model.pth', map_location=self.unet.device))
         self.pipeline.to(self.unet.device)
         image = self.pipeline(
