@@ -19,6 +19,16 @@ def extract_metrics(log_file_path):
                 metrics[task_id] = metric_value
     return metrics
 
+
+def extract_average_performance(file_path, task_id):
+    pattern = re.compile(rf"Average Performance of Task {task_id}:\s+([\d.]+)")
+    with open(file_path, 'r') as file:
+        for line in file:
+            match = pattern.search(line)
+            if match:
+                return float(match.group(1))
+    return None
+
 def update_task_id_in_path(path, new_task_id):
     updated_path = re.sub(r'task_id=\d+', f'task_id={new_task_id}', path)
     return updated_path
@@ -98,15 +108,11 @@ def evaluate(diffusion_model, dataloaders, model_args, data_args, training_args)
     # Update AFQ for the last task
     performance_avg = performance_sum / (data_args.task_id + 1)
     logging.info(f"Average Performance of Task {data_args.task_id}: {performance_avg}")
-    task_count = 0
     all_task_performance_sum = 0
     for task_id in range(data_args.task_id + 1):
-        task_metrics = extract_metrics(update_task_id_in_path(os.path.join(training_args.logging_dir, 'log.txt'), task_id))
-        all_task_performance_sum += sum(task_metrics.values())
-        if task_id == 0:
-            first_task_performance = sum(task_metrics.values()) / len(task_metrics)
-        task_count += len(task_metrics)
-    all_task_performance_avg = all_task_performance_sum / task_count
+        task_metrics = extract_average_performance(update_task_id_in_path(os.path.join(training_args.logging_dir, 'log.txt'), task_id), task_id)
+        all_task_performance_sum += task_metrics
+    all_task_performance_avg = all_task_performance_sum / (data_args.task_id + 1)
     logging.info(f"Average Incremental Performance of Task {data_args.task_id}: {all_task_performance_avg}")
 
     # Calculate Forgetting Rate (FR) if not the first task
