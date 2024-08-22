@@ -45,16 +45,29 @@ def evaluate(diffusion_model, dataloaders, model_args, data_args, training_args)
         validator.to(accelerator.device)
         all_samples = []
         all_labels = []
-        while len(all_samples) < data_args.tot_samples_for_eval:
-            labels = random.choices([data_args.sequence.index(x) for x in data_args.all_task_labels[task_id]], k=training_args.per_device_eval_batch_size)
-            all_samples.extend(
-                diffusion_model.sample(
-                    training_args.per_device_eval_batch_size,
-                    training_args.seed + len(all_samples),
-                    labels=torch.tensor(labels, device=accelerator.device, dtype=torch.long)
-                )
+        # while len(all_samples) < data_args.tot_samples_for_eval:
+        #     labels = random.choices([data_args.sequence.index(x) for x in data_args.all_task_labels[task_id]], k=training_args.per_device_eval_batch_size)
+        #     all_samples.extend(
+        #         diffusion_model.sample(
+        #             training_args.per_device_eval_batch_size,
+        #             training_args.seed + len(all_samples),
+        #             labels=torch.tensor(labels, device=accelerator.device, dtype=torch.long)
+        #         )
+        #     )
+        #     all_labels.extend(labels)
+
+        # Fixed number of samples per class
+        samples_per_class = data_args.tot_samples_for_eval // len(data_args.all_task_labels[task_id])
+        for label in data_args.all_task_labels[task_id]:
+            label_idx = data_args.sequence.index(label)
+            # Generate the fixed number of samples for the current class
+            sample = diffusion_model.sample(
+                samples_per_class,
+                training_args.seed + samples_per_class,
+                labels=torch.tensor([label_idx], device=accelerator.device, dtype=torch.long)
             )
-            all_labels.extend(labels)
+            all_samples.extend(sample)
+            all_labels.append(label_idx)
         # Evaluate and log metrics for the current task
         if data_args.noncl:
             eval_logs = validator.evaluate(all_samples[:data_args.tot_samples_for_eval], all_labels, dataloaders['test_loader'])
@@ -62,9 +75,22 @@ def evaluate(diffusion_model, dataloaders, model_args, data_args, training_args)
             eval_logs = validator.evaluate(all_samples[:data_args.tot_samples_for_eval], all_labels, dataloaders['all_test_loader'][task_id])
         current_performance = eval_logs['metric_for_validation']
         curr_task_performance[task_id] = current_performance
-        # Save samples grid image
-        rows = cols = 16
-        make_image_grid(all_samples[:rows * cols], rows=rows, cols=cols).save(f'{training_args.logging_dir}/{task_id}.png')
+        # # Save samples grid image
+        # rows = cols = 16
+        # make_image_grid(all_samples[:rows * cols], rows=rows, cols=cols).save(f'{training_args.logging_dir}/{task_id}.png')
+
+        # Save samples grid image by class
+        cols = 32
+        rows = len(data_args.all_task_labels[task_id])
+        visual_samples = []
+        for label_index in range(rows):
+            label_samples = all_samples[label_index * samples_per_class:(label_index + 1) * samples_per_class]
+            limited_samples = label_samples[:cols]
+            visual_samples.extend(limited_samples)
+        # Create and save the grid image
+        grid_image = make_image_grid(visual_samples, rows=rows, cols=cols)
+        grid_image.save(f'{training_args.logging_dir}/{task_id}_by_class.png')
+
         logging.info(f"Task {task_id}: {str(eval_logs)}")
         del validator
         performance_sum += current_performance
