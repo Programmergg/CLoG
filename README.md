@@ -1,3 +1,4 @@
+<!--
 <p align="center">
   <a href="https://github.com/linhaowei1/CLoG">
     <img src="figures/CLoG.png" width="50%" alt="CLoG" />
@@ -9,7 +10,7 @@
  | [日本語](docs/README_JP.md) | [English](https://github.com/linhaowei1/CLoG) | [中文简体](docs/README_CN.md) | [中文繁體](docs/README_TW.md) |
 
 </div>
-
+-->
 
 ---
 <p align="center">
