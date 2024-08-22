@@ -56,7 +56,10 @@ def evaluate(diffusion_model, dataloaders, model_args, data_args, training_args)
             )
             all_labels.extend(labels)
         # Evaluate and log metrics for the current task
-        eval_logs = validator.evaluate(all_samples[:data_args.tot_samples_for_eval], all_labels, dataloaders['all_test_loader'][task_id])
+        if data_args.noncl:
+            eval_logs = validator.evaluate(all_samples[:data_args.tot_samples_for_eval], all_labels, dataloaders['test_loader'])
+        else:
+            eval_logs = validator.evaluate(all_samples[:data_args.tot_samples_for_eval], all_labels, dataloaders['all_test_loader'][task_id])
         current_performance = eval_logs['metric_for_validation']
         curr_task_performance[task_id] = current_performance
         # Save samples grid image
