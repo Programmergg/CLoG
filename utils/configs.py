@@ -14,7 +14,7 @@ class DataArguments:
 @dataclass
 class ModelArguments:
     model_arch: Literal['ddim', 'gan'] = field(default='ddim')
-    method: Literal['noncl', 'naive', 'er', 'agem', 'generative_replay', 'l2', 'noncl', 'ewc', 'kd', 'si', 'mas', 'lora', 'ensemble'] = field(default='naive')
+    method: Literal['noncl', 'naive', 'ensemble', 'er', 'agem', 'generative_replay', 'l2', 'ewc', 'kd', 'si', 'mas', 'lora'] = field(default='naive')
     diffusion_time_steps: int = field(default=1000)
     inference_steps: int = field(default=50)
 

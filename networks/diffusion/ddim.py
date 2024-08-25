@@ -1,3 +1,4 @@
+import os
 import torch
 import random
 import itertools
@@ -174,8 +175,10 @@ class Learner(BaseLearner):
     @torch.no_grad()
     def sample(self, bs, seed, labels):
         task_id = (labels[0] // self.data_args.class_num).item()
-        if self.model_args.method == 'ensemble' and task_id > 0:
-            self.unet.load_state_dict(torch.load(f'{self.training_args.all_dirs[task_id]}/model.pth', map_location=self.unet.device))
+        if self.model_args.method == 'ensemble':
+            unet_path = f'{self.training_args.all_dirs[self.data_args.task_id]}/model.pth'
+            if os.path.exists(unet_path):
+                self.unet.load_state_dict(torch.load(f'{self.training_args.all_dirs[task_id]}/model.pth', map_location=self.unet.device))
         self.pipeline.to(self.unet.device)
         image = self.pipeline(
             batch_size=bs,
