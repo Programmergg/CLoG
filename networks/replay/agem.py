@@ -16,9 +16,18 @@ class AGEM:
     def dot_product(self, x, y):
         return sum([torch.dot(x[n].view(-1), y[n].view(-1)) for n in x.keys()])
 
+    # def project(self, gxy, ger):
+    #     corr = self.dot_product(gxy, ger) / self.dot_product(ger, ger)
+    #     return gxy - corr * ger
     def project(self, gxy, ger):
         corr = self.dot_product(gxy, ger) / self.dot_product(ger, ger)
-        return gxy - corr * ger
+        result = {}
+        for key in gxy:
+            if key in ger:
+                result[key] = gxy[key] - corr * ger[key]
+            else:
+                result[key] = gxy[key]
+        return result
 
     def overwrite_grad(self, params, new_grad):
         count = 0
