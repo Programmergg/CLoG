@@ -1,5 +1,5 @@
 #!/bin/bash
-export CUDA_VISIBLE_DEVICES="1"
+export CUDA_VISIBLE_DEVICES="0"
 
 seed=42
 eval_steps=500
@@ -9,7 +9,7 @@ shuffle_order=False
 lr_warmup_steps=500
 learning_rate="2e-4"
 eval_batch_size=512
-num_train_epochs=200
+num_train_epochs=400
 dataset_name="Mnist-1T"
 tot_samples_for_eval=2048
 per_device_eval_batch_size=256

@@ -1,14 +1,16 @@
 #!/bin/bash
-export CUDA_VISIBLE_DEVICES="1"
+export CUDA_VISIBLE_DEVICES="0"
 
 seed=42
 eval_steps=500
 weight_decay=0
-method='ensemble'
-shuffle_order=True
+method='agem'
+memory_size=512
+replay_batch_size=256
+shuffle_order=False
 lr_warmup_steps=500
 learning_rate="2e-4"
-num_train_epochs=400
+num_train_epochs=200
 dataset_name="Mnist-5T"
 tot_samples_for_eval=2048
 per_device_eval_batch_size=256
@@ -31,5 +33,7 @@ for i in $(seq 0 $((num_tasks-1))); do
         --dataset_name $dataset_name \
         --task_id $i \
         --seed $seed \
-        --method $method
+        --method $method \
+        --memory_size $memory_size \
+        --replay_batch_size $replay_batch_size
 done
