@@ -36,13 +36,10 @@ Code and data for paper <a href="https://arxiv.org/pdf/2406.04584">CLoG: Benchma
 * **[Aug. 23, 2024]**: We have resolved the second limitation. Now, the testing phase follows a class-guided generation approach.
 * **[Aug. 25, 2024]**: Experiments are conducted on the MNIST dataset using the NonCL, Ensemble, Naive, ER, and AGEM methods.
 * **[Sept. 08, 2024]**: We have implemented all methods on the MNIST dataset, except for Few-shot C-LoRA, and conducted detailed hyperparameter experiments. The Mean Incremental FIDs are shown below:
-
-| Non-CL | NCL   | ER_512 | ER_5120 | GR    | KD    | L2    | EWC   | SI    | MAS    | A-GEM_512 | A-GEM_5120 | Ensemble | C-LoRA |
-|--------|-------|--------|---------|-------|-------|-------|-------|-------|--------|------------|------------|----------|--------|
-| 4.22   | 60.64 | 65.88  | 49.13   | 7.53  | 61.48 | 78.26 | 66.76 | 86.49 | 297.22 | 64.54     | 42.54      | 6.63     | -      |
-
-
-
+  | C-LoRA | Non-CL | Ensemble | NCL   | GR    | ER_512 | ER_5120 | A-GEM_512 | A-GEM_5120 | KD    | EWC   | L2    | SI     | MAS    |
+  |--------|--------|----------|-------|-------|-----------|--------|---------|------------|-------|-------|-------|--------|--------|
+  | -      | 4.22   | 6.63     | 60.64 | 7.53  | 65.88  | 42.54   | 64.54     | 49.13      | 61.48 | 66.76 | 78.26 | 86.49  | 297.22 |
+  It is evident that certain continual classification methods do not yield significant positive effects in generative scenarios.
 
 <!--
 ## 👋 Overview
