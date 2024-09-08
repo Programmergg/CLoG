@@ -1,11 +1,12 @@
 #!/bin/bash
-export CUDA_VISIBLE_DEVICES="0"
+export CUDA_VISIBLE_DEVICES="1"
 
 seed=42
 eval_steps=500
 weight_decay=0
-method='ensemble'
-shuffle_order=True
+method='l2'
+L2_weight=50
+shuffle_order=False
 lr_warmup_steps=500
 learning_rate="1e-3"
 num_train_epochs=100
@@ -31,5 +32,6 @@ for i in $(seq 0 $((num_tasks-1))); do
         --dataset_name $dataset_name \
         --task_id $i \
         --seed $seed \
-        --method $method
+        --method $method \
+        --L2_weight $L2_weight
 done

@@ -4,8 +4,9 @@ export CUDA_VISIBLE_DEVICES="0"
 seed=42
 eval_steps=500
 weight_decay=0
-method='ensemble'
-shuffle_order=True
+method='ewc'
+ewc_weight=5e6
+shuffle_order=False
 lr_warmup_steps=500
 learning_rate="1e-3"
 num_train_epochs=100
@@ -31,5 +32,6 @@ for i in $(seq 0 $((num_tasks-1))); do
         --dataset_name $dataset_name \
         --task_id $i \
         --seed $seed \
-        --method $method
+        --method $method \
+        --ewc_weight $ewc_weight
 done

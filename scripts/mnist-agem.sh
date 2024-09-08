@@ -5,16 +5,16 @@ seed=42
 eval_steps=500
 weight_decay=0
 method='agem'
-memory_size=512
-replay_batch_size=256
+memory_size=5120
+replay_batch_size=128
 shuffle_order=False
 lr_warmup_steps=500
-learning_rate="2e-4"
-num_train_epochs=200
+learning_rate="1e-3"
+num_train_epochs=100
 dataset_name="Mnist-5T"
 tot_samples_for_eval=2048
-per_device_eval_batch_size=256
-per_device_train_batch_size=256
+per_device_eval_batch_size=128
+per_device_train_batch_size=128
 num_tasks=$(echo $dataset_name | grep -o '[0-9]T' | grep -o '[0-9]')
 
 # training and evaluation
