@@ -39,6 +39,7 @@ Code and data for paper <a href="https://arxiv.org/pdf/2406.04584">CLoG: Benchma
   | C-LoRA | Non-CL | Ensemble | NCL   | GR    | ER_512 | ER_5120 | A-GEM_512 | A-GEM_5120 | KD    | EWC   | L2    | SI     | MAS    |
   |--------|--------|----------|-------|-------|-----------|--------|---------|------------|-------|-------|-------|--------|--------|
   | -      | 4.22   | 6.63     | 60.64 | 7.53  | 65.88  | 42.54   | 64.54     | 49.13      | 61.48 | 66.76 | 78.26 | 86.49  | 297.22 |
+  
   It is evident that certain continual classification methods do not yield significant positive effects in generative scenarios.
 
 <!--
