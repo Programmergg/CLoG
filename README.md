@@ -35,6 +35,13 @@ Code and data for paper <a href="https://arxiv.org/pdf/2406.04584">CLoG: Benchma
 * **[Aug. 22, 2024]**: Optimized version of CoLG. At this stage, the main improvements involve refining the original code's workflow and removing redundant parts, including the integration of training and testing, dataset construction, and testing scripts. In this version, testing is no longer performed after the completion of all tasks; instead, each task is tested immediately after it is completed, followed by testing the current and previous tasks, with all relevant metrics saved. However, this version still has four major drawbacks: (1) The training scripts for various methods and the GAN components are missing. (2) The testing process does not follow class-guided generation but instead follows task-based generation, which means the obtained metrics are not strictly accurate. (3) There is an issue with the sample process in the C-LoRA method; the task ID should not be directly accessed but rather inferred through various means to obtain a pseudo-task ID. (4) The training process of C-LoRA aligns with Few-shot Class Incremental Learning, where pretraining is done on the first task, followed by LoRA fine-tuning on subsequent tasks. This approach is suitable for few-shot scenarios but not for LoRA-based methods, which should ideally use a pretrained model on a large dataset. This approach should now be referred to as the Few-shot C-LoRA setting.
 * **[Aug. 23, 2024]**: We have resolved the second limitation. Now, the testing phase follows a class-guided generation approach.
 * **[Aug. 25, 2024]**: Experiments are conducted on the MNIST dataset using the NonCL, Ensemble, Naive, ER, and AGEM methods.
+* **[Sept. 08, 2024]**: We have implemented all methods on the MNIST dataset, except for Few-shot C-LoRA, and conducted detailed hyperparameter experiments. The Mean Incremental FIDs are shown below:
+
+| Non-CL | NCL   | ER_512 | ER_5120 | GR    | KD    | L2    | EWC   | SI    | MAS    | A-GEM_512 | A-GEM_5120 | Ensemble | C-LoRA |
+|--------|-------|--------|---------|-------|-------|-------|-------|-------|--------|------------|------------|----------|--------|
+| 4.22   | 60.64 | 65.88  | 49.13   | 7.53  | 61.48 | 78.26 | 66.76 | 86.49 | 297.22 | 64.54     | 42.54      | 6.63     | -      |
+
+
 
 
 <!--
